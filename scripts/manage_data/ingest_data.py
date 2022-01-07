@@ -1,5 +1,6 @@
 import os
 import cv2
+import hashlib
 from shutil import copy
 from tqdm import tqdm
 
@@ -14,4 +15,12 @@ def convert2gray(image_paths, save_path):
         cv2.imwrite(os.path.join(save_path,os.path.basename(img_path)),img)
         name = img_path.replace('.jpg','.txt')
         copy(name, os.path.join(save_path, os.path.basename(name)))
+
+def get_md5(filename):
+    hasher = hashlib.md5()
+    with open(filename,'rb') as f:
+        buf = f.read()
+        hasher.update(buf)
+        hash_value = hasher.hexdigest()
+    return hash_value
 
